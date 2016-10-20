@@ -1,0 +1,45 @@
+﻿@using KPax.Models
+@model HomeViewModel
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+@using (Html.BeginForm())
+{
+    <div class="jumbotron">
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <div class="alert alert-error">
+                <p><strong>Error:</strong> @TempData["ErrorMessage"].ToString()</p>
+            </div>
+        }
+        <div class="form-group">
+            <div class="col-md-5">
+                @Html.DropDownListFor(m => m.Project.Id, ViewBag.ProjectsList as SelectList, "Select dashboard project...", new { @class = "form-control", onChange = "this.form.submit(); return false;" })
+            </div>
+        </div>
+        <hr />
+        @MvcHtmlString.Create(ViewBag.Dashboard)
+
+    </div>
+}
+<div class="row">
+    <div class="col-md-4">
+        <h2>Generate baseline</h2>
+        <p>
+            A baseline flow can be executed for each project.
+        </p>
+        <p><input type="button" value="Let's do it &raquo;" class="btn btn-default" onclick="location.href='@Url.Action("Index", "BaselineFlow")'" /></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Get more libraries</h2>
+        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
+        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Web Hosting</h2>
+        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
+        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+    </div>
+</div>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="8f5fef26786d46f48b3e599380c913b7" Name="Diagram1">
+        <EntityTypeShape EntityType="ModelDB.BaselineAudit" Width="1.5" PointX="5.75" PointY="2" />
+        <EntityTypeShape EntityType="ModelDB.BaselineFlow" Width="1.5" PointX="3.75" PointY="0.75" />
+        <EntityTypeShape EntityType="ModelDB.BaselineFlowProject" Width="1.5" PointX="6" PointY="8.625" />
+        <EntityTypeShape EntityType="ModelDB.BaselinePlan" Width="1.5" PointX="3" PointY="15" />
+        <EntityTypeShape EntityType="ModelDB.BaselinePlanAudit" Width="1.5" PointX="5.25" PointY="15.5" />
+        <EntityTypeShape EntityType="ModelDB.GitSetup" Width="1.5" PointX="3" PointY="12.25" />
+        <EntityTypeShape EntityType="ModelDB.Project" Width="1.5" PointX="0.75" PointY="8.125" />
+        <EntityTypeShape EntityType="ModelDB.ProjectUser" Width="1.5" PointX="3" PointY="9.75" />
+        <EntityTypeShape EntityType="ModelDB.TeamCitySetup" Width="1.5" PointX="3" PointY="4.125" />
+        <AssociationConnector Association="ModelDB.FK_BaselineFlow_BaselineFlow" />
+        <AssociationConnector Association="ModelDB.Fk_BaselineFlow_Project" />
+        <AssociationConnector Association="ModelDB.FK_BaselinePlan_Project" />
+        <AssociationConnector Association="ModelDB.FK_BaselinePlanAudit_BaselinePlan" />
+        <AssociationConnector Association="ModelDB.FK_GitSetup_Project" />
+        <AssociationConnector Association="ModelDB.FK_ProjectUser_Project" />
+        <AssociationConnector Association="ModelDB.FK_TeamCitySetup_Project" />
+        <EntityTypeShape EntityType="ModelDB.AuditReport" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="ModelDB.AuditReportResults" Width="1.5" PointX="5.75" PointY="4.75" />
+        <EntityTypeShape EntityType="ModelDB.Audits" Width="1.5" PointX="5.625" PointY="11.625" />
+        <AssociationConnector Association="ModelDB.FK_Audits_BaselinePlan" />
+        <AssociationConnector Association="ModelDB.FK_Audits_Project" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

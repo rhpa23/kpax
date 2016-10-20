@@ -1,0 +1,64 @@
+﻿@model IEnumerable<KPax.DataModels.Audits>
+
+@{
+    ViewBag.Title = "Audits";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ReportNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ScheduledDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PerformedDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Auditor)
+        </th>
+        <th>
+            Baseline
+        </th>
+        <th>
+            Project
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ReportNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ScheduledDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PerformedDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Auditor)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BaselinePlan.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Project.Name)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id }) |
+            @Html.ActionLink("Report", "Report", new { id = item.Id }) 
+        </td>
+    </tr>
+}
+
+</table>

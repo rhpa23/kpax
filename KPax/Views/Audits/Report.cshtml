@@ -1,0 +1,98 @@
+﻿@using KPax.DataModels
+@model KPax.Models.AuditReportViewModel
+
+@{
+    ViewBag.Title = "Audit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+@using (Html.BeginForm())
+{
+    
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+
+        @Html.AntiForgeryToken()
+        <div class="form-group">
+            <div class="row">
+                <div>@Html.LabelFor(model => model.Audit.ReportNumber, "Number:", htmlAttributes: new { @Style = "width:90px", @class = "col-md-1" })</div>
+                <div class="col-md-2">@Html.DisplayFor(model => model.Audit.ReportNumber)</div>
+
+                <div>@Html.LabelFor(model => model.Audit.Project.Name, "Project:", htmlAttributes: new { @Style = "width:90px",  @class = "col-md-1" })</div>
+                <div class="col-md-2">@Html.DisplayFor(model => model.Audit.Project.Name)</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div>@Html.LabelFor(model => model.Audit.BaselinePlan.Name, "Baseline:", htmlAttributes: new { @Style = "width:90px", @class = "col-md-1" })</div>
+                <div class="col-md-2">@Html.DisplayFor(model => model.Audit.BaselinePlan.Name)</div>
+
+                <div>@Html.LabelFor(model => model.Audit.ScheduledDate, "Scheduled:", htmlAttributes: new { @Style = "width:90px", @class = "col-md-1" })</div>
+                <div class="col-md-2">@Html.DisplayFor(model => model.Audit.ScheduledDate)</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div>@Html.LabelFor(model => model.Audit.Auditor, "Auditor:", htmlAttributes: new {  @Style = "width:90px", @class = "col-md-1" })</div>
+                <div class="col-md-10">@Html.DisplayFor(model => model.Audit.Auditor)</div>
+            </div>
+        </div>
+
+        <br />
+        <br />
+
+        <table class="table">
+            <tr>
+                <th>Verify</th>
+                <th>Conformities</th>
+                <th>Result</th>
+                <th>Severity</th>
+                <th>Problems found</th>
+                <th>Issues (Jira)</th>
+                <th>Comments</th>
+            </tr>
+        @for (int i = 0; i < Model.AuditReports.Count; i++)
+        {
+            @Html.HiddenFor(model => model.MyResults[i].AuditId)
+            @Html.HiddenFor(model => model.MyResults[i].AuditReportId)
+            <tr>
+                <td>@Html.DisplayFor(modelItem => Model.AuditReports[i].Verify)</td>
+                <td style="width: 290px">@Html.DisplayFor(modelItem => Model.AuditReports[i].Conformities)</td>
+                <td>
+                    @Html.DropDownListFor(modelItem => Model.MyResults[i].Result, new List<SelectListItem>
+                    {
+                        new SelectListItem{ Text="NA", Value = "2", Selected = (Model.MyResults[i].Result == 2)},
+                        new SelectListItem{ Text="Nok", Value = "1", Selected = (Model.MyResults[i].Result == 1)},
+                        new SelectListItem{ Text="Ok", Value = "0", Selected = (Model.MyResults[i].Result == 0) }
+                    }) 
+                </td>
+                <td>
+                    @Html.DropDownListFor(modelItem => Model.MyResults[i].Severity, new List<SelectListItem>
+                    {
+                        new SelectListItem{ Text="", Value = "0" },
+                        new SelectListItem{ Text="High", Value = "3" },
+                        new SelectListItem{ Text="Medium", Value = "2" },
+                        new SelectListItem{ Text="Low", Value = "1" }
+                    })
+                </td>
+                <td>@Html.TextAreaFor(model => Model.MyResults[i].ProblemsFound, new { htmlAttributes = new { @class = "form-control" } })</td>
+                <td>@Html.TextAreaFor(model => Model.MyResults[i].IssuesJira, new { htmlAttributes = new { @class = "form-control" } })</td>
+                <td>@Html.TextAreaFor(model => Model.MyResults[i].Comments, new { htmlAttributes = new { @class = "form-control" } })</td>
+            </tr>
+        }
+
+        </table>
+        <hr />  
+        <div class="form-group">
+            <div class="col-md-offset-10 col-md-10">
+                <input type="submit" value="Save Audit" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

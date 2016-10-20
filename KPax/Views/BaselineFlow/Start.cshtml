@@ -1,0 +1,38 @@
+﻿@model KPax.Models.BaselineFlowProcessViewModel
+
+@{
+    ViewBag.Title = "Baseline flow proccess..";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.BaselinePlan.ProjectId)
+    <hr />
+    <table class="table">
+
+        @foreach (var item in Model.BaselineFlow)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                    
+                </td>
+                <td>
+                    <div class="partialContents" data-url="@Url.Action("Process", "BaselineFlow", new { baselineFlowId = item.Id, baselinePlan = Model.BaselinePlan.Name, projectId = Model.BaselinePlan.ProjectId })">
+                        <img src="~/Images/indicator.white.gif" /> running ...
+                    </div>
+                </td>
+            </tr>
+        }
+
+    </table>
+
+    <div>
+        @Html.ActionLink("Back", "Index")
+        <input type="submit" value="Confirm" class="btn btn-default pull-right"  />
+    </div>
+}

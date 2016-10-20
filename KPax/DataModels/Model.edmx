@@ -1,0 +1,749 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ModelDB.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AuditReport">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Verify" Type="nchar" MaxLength="50" />
+          <Property Name="Conformities" Type="text" />
+        </EntityType>
+        <EntityType Name="AuditReportResults">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AuditId" Type="int" Nullable="false" />
+          <Property Name="AuditReportId" Type="int" Nullable="false" />
+          <Property Name="Result" Type="int" />
+          <Property Name="Severity" Type="int" />
+          <Property Name="ProblemsFound" Type="text" />
+          <Property Name="IssuesJira" Type="text" />
+          <Property Name="Comments" Type="text" />
+        </EntityType>
+        <EntityType Name="Audits">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProjectId" Type="int" Nullable="false" />
+          <Property Name="ReportNumber" Type="int" Nullable="false" />
+          <Property Name="ScheduledDate" Type="date" Nullable="false" />
+          <Property Name="PerformedDate" Type="date" />
+          <Property Name="Auditor" Type="nchar" MaxLength="20" Nullable="false" />
+          <Property Name="Comments" Type="text" />
+          <Property Name="BaselineId" Type="int" />
+        </EntityType>
+        <EntityType Name="BaselineAudit">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="criteria" Type="text" />
+        </EntityType>
+        <EntityType Name="BaselineFlow">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="100" Nullable="false" />
+          <Property Name="Description" Type="nchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="BaselineFlowProject">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProjectId" Type="int" Nullable="false" />
+          <Property Name="BaselineFlowId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BaselinePlan">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="40" Nullable="false" />
+          <Property Name="Description" Type="nchar" MaxLength="100" />
+          <Property Name="ReleaseDate" Type="date" Nullable="false" />
+          <Property Name="IsReleased" Type="bit" Nullable="false" />
+          <Property Name="ProjectId" Type="int" Nullable="false" />
+          <Property Name="RememberMe" Type="bit" Nullable="false" />
+          <Property Name="RememberMeDays" Type="int" />
+        </EntityType>
+        <EntityType Name="BaselinePlanAudit">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BaselinePlanId" Type="int" Nullable="false" />
+          <Property Name="Values" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="Verified" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="GitSetup">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RepositoryPath" Type="nchar" MaxLength="100" Nullable="false" />
+          <Property Name="ProjectId" Type="int" Nullable="false" />
+          <Property Name="Crendential" Type="text" Nullable="false" />
+          <Property Name="Description" Type="text" />
+        </EntityType>
+        <EntityType Name="Project">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="100" Nullable="false" />
+          <Property Name="Email" Type="nchar" MaxLength="100" Nullable="false" />
+          <Property Name="Acronym" Type="nchar" MaxLength="5" Nullable="false" />
+          <Property Name="TemplateEmail" Type="text" Nullable="false" />
+          <Property Name="EmailCM" Type="nchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="ProjectUser">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProjectId" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TeamCitySetup">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Uri" Type="nchar" MaxLength="50" Nullable="false" />
+          <Property Name="Crendential" Type="nchar" MaxLength="500" Nullable="false" />
+          <Property Name="IdProject" Type="int" Nullable="false" />
+          <Property Name="BuildId" Type="nchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Audits_BaselinePlan">
+          <End Role="BaselinePlan" Type="Self.BaselinePlan" Multiplicity="0..1" />
+          <End Role="Audits" Type="Self.Audits" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BaselinePlan">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Audits">
+              <PropertyRef Name="BaselineId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Audits_Project">
+          <End Role="Project" Type="Self.Project" Multiplicity="1" />
+          <End Role="Audits" Type="Self.Audits" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Audits">
+              <PropertyRef Name="ProjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BaselineFlow_BaselineFlow">
+          <End Role="BaselineFlow" Type="Self.BaselineFlow" Multiplicity="1" />
+          <End Role="BaselineFlowProject" Type="Self.BaselineFlowProject" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BaselineFlow">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BaselineFlowProject">
+              <PropertyRef Name="BaselineFlowId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_BaselineFlow_Project">
+          <End Role="Project" Type="Self.Project" Multiplicity="1" />
+          <End Role="BaselineFlowProject" Type="Self.BaselineFlowProject" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BaselineFlowProject">
+              <PropertyRef Name="ProjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BaselinePlan_Project">
+          <End Role="Project" Type="Self.Project" Multiplicity="1" />
+          <End Role="BaselinePlan" Type="Self.BaselinePlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BaselinePlan">
+              <PropertyRef Name="ProjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BaselinePlanAudit_BaselinePlan">
+          <End Role="BaselinePlan" Type="Self.BaselinePlan" Multiplicity="1" />
+          <End Role="BaselinePlanAudit" Type="Self.BaselinePlanAudit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BaselinePlan">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BaselinePlanAudit">
+              <PropertyRef Name="BaselinePlanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GitSetup_Project">
+          <End Role="Project" Type="Self.Project" Multiplicity="1" />
+          <End Role="GitSetup" Type="Self.GitSetup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GitSetup">
+              <PropertyRef Name="ProjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProjectUser_Project">
+          <End Role="Project" Type="Self.Project" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ProjectUser" Type="Self.ProjectUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProjectUser">
+              <PropertyRef Name="ProjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TeamCitySetup_Project">
+          <End Role="Project" Type="Self.Project" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TeamCitySetup" Type="Self.TeamCitySetup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TeamCitySetup">
+              <PropertyRef Name="IdProject" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ModelDBStoreContainer">
+          <EntitySet Name="AuditReport" EntityType="Self.AuditReport" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AuditReportResults" EntityType="Self.AuditReportResults" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Audits" EntityType="Self.Audits" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BaselineAudit" EntityType="Self.BaselineAudit" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BaselineFlow" EntityType="Self.BaselineFlow" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BaselineFlowProject" EntityType="Self.BaselineFlowProject" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BaselinePlan" EntityType="Self.BaselinePlan" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BaselinePlanAudit" EntityType="Self.BaselinePlanAudit" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GitSetup" EntityType="Self.GitSetup" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Project" EntityType="Self.Project" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProjectUser" EntityType="Self.ProjectUser" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TeamCitySetup" EntityType="Self.TeamCitySetup" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Audits_BaselinePlan" Association="Self.FK_Audits_BaselinePlan">
+            <End Role="BaselinePlan" EntitySet="BaselinePlan" />
+            <End Role="Audits" EntitySet="Audits" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Audits_Project" Association="Self.FK_Audits_Project">
+            <End Role="Project" EntitySet="Project" />
+            <End Role="Audits" EntitySet="Audits" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BaselineFlow_BaselineFlow" Association="Self.FK_BaselineFlow_BaselineFlow">
+            <End Role="BaselineFlow" EntitySet="BaselineFlow" />
+            <End Role="BaselineFlowProject" EntitySet="BaselineFlowProject" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_BaselineFlow_Project" Association="Self.Fk_BaselineFlow_Project">
+            <End Role="Project" EntitySet="Project" />
+            <End Role="BaselineFlowProject" EntitySet="BaselineFlowProject" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BaselinePlan_Project" Association="Self.FK_BaselinePlan_Project">
+            <End Role="Project" EntitySet="Project" />
+            <End Role="BaselinePlan" EntitySet="BaselinePlan" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BaselinePlanAudit_BaselinePlan" Association="Self.FK_BaselinePlanAudit_BaselinePlan">
+            <End Role="BaselinePlan" EntitySet="BaselinePlan" />
+            <End Role="BaselinePlanAudit" EntitySet="BaselinePlanAudit" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GitSetup_Project" Association="Self.FK_GitSetup_Project">
+            <End Role="Project" EntitySet="Project" />
+            <End Role="GitSetup" EntitySet="GitSetup" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProjectUser_Project" Association="Self.FK_ProjectUser_Project">
+            <End Role="Project" EntitySet="Project" />
+            <End Role="ProjectUser" EntitySet="ProjectUser" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeamCitySetup_Project" Association="Self.FK_TeamCitySetup_Project">
+            <End Role="Project" EntitySet="Project" />
+            <End Role="TeamCitySetup" EntitySet="TeamCitySetup" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ModelDB" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="EntitiesDB" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="BaselineAudit" EntityType="ModelDB.BaselineAudit" />
+          <EntitySet Name="BaselineFlow" EntityType="ModelDB.BaselineFlow" />
+          <EntitySet Name="BaselineFlowProject" EntityType="ModelDB.BaselineFlowProject" />
+          <EntitySet Name="BaselinePlan" EntityType="ModelDB.BaselinePlan" />
+          <EntitySet Name="BaselinePlanAudit" EntityType="ModelDB.BaselinePlanAudit" />
+          <EntitySet Name="GitSetup" EntityType="ModelDB.GitSetup" />
+          <EntitySet Name="Project" EntityType="ModelDB.Project" />
+          <EntitySet Name="ProjectUser" EntityType="ModelDB.ProjectUser" />
+          <EntitySet Name="TeamCitySetup" EntityType="ModelDB.TeamCitySetup" />
+          <AssociationSet Name="FK_BaselineFlow_BaselineFlow" Association="ModelDB.FK_BaselineFlow_BaselineFlow">
+            <End Role="BaselineFlow" EntitySet="BaselineFlow" />
+            <End Role="BaselineFlowProject" EntitySet="BaselineFlowProject" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_BaselineFlow_Project" Association="ModelDB.Fk_BaselineFlow_Project">
+            <End Role="Project" EntitySet="Project" />
+            <End Role="BaselineFlowProject" EntitySet="BaselineFlowProject" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BaselinePlan_Project" Association="ModelDB.FK_BaselinePlan_Project">
+            <End Role="Project" EntitySet="Project" />
+            <End Role="BaselinePlan" EntitySet="BaselinePlan" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BaselinePlanAudit_BaselinePlan" Association="ModelDB.FK_BaselinePlanAudit_BaselinePlan">
+            <End Role="BaselinePlan" EntitySet="BaselinePlan" />
+            <End Role="BaselinePlanAudit" EntitySet="BaselinePlanAudit" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GitSetup_Project" Association="ModelDB.FK_GitSetup_Project">
+            <End Role="Project" EntitySet="Project" />
+            <End Role="GitSetup" EntitySet="GitSetup" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProjectUser_Project" Association="ModelDB.FK_ProjectUser_Project">
+            <End Role="Project" EntitySet="Project" />
+            <End Role="ProjectUser" EntitySet="ProjectUser" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeamCitySetup_Project" Association="ModelDB.FK_TeamCitySetup_Project">
+            <End Role="Project" EntitySet="Project" />
+            <End Role="TeamCitySetup" EntitySet="TeamCitySetup" />
+          </AssociationSet>
+          <EntitySet Name="AuditReport" EntityType="ModelDB.AuditReport" />
+          <EntitySet Name="AuditReportResults" EntityType="ModelDB.AuditReportResults" />
+          <EntitySet Name="Audits" EntityType="ModelDB.Audits" />
+          <AssociationSet Name="FK_Audits_BaselinePlan" Association="ModelDB.FK_Audits_BaselinePlan">
+            <End Role="BaselinePlan" EntitySet="BaselinePlan" />
+            <End Role="Audits" EntitySet="Audits" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Audits_Project" Association="ModelDB.FK_Audits_Project">
+            <End Role="Project" EntitySet="Project" />
+            <End Role="Audits" EntitySet="Audits" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="BaselineAudit">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="criteria" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="BaselineFlow">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="200" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="BaselineFlowProject" Relationship="ModelDB.FK_BaselineFlow_BaselineFlow" FromRole="BaselineFlow" ToRole="BaselineFlowProject" />
+        </EntityType>
+        <EntityType Name="BaselineFlowProject">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProjectId" Type="Int32" Nullable="false" />
+          <Property Name="BaselineFlowId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="BaselineFlow" Relationship="ModelDB.FK_BaselineFlow_BaselineFlow" FromRole="BaselineFlowProject" ToRole="BaselineFlow" />
+          <NavigationProperty Name="Project" Relationship="ModelDB.Fk_BaselineFlow_Project" FromRole="BaselineFlowProject" ToRole="Project" />
+        </EntityType>
+        <EntityType Name="BaselinePlan">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="40" FixedLength="true" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="ReleaseDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="IsReleased" Type="Boolean" Nullable="false" />
+          <Property Name="ProjectId" Type="Int32" Nullable="false" />
+          <Property Name="RememberMe" Type="Boolean" Nullable="false" />
+          <Property Name="RememberMeDays" Type="Int32" />
+          <NavigationProperty Name="Project" Relationship="ModelDB.FK_BaselinePlan_Project" FromRole="BaselinePlan" ToRole="Project" />
+          <NavigationProperty Name="BaselinePlanAudit" Relationship="ModelDB.FK_BaselinePlanAudit_BaselinePlan" FromRole="BaselinePlan" ToRole="BaselinePlanAudit" />
+          <NavigationProperty Name="Audits" Relationship="ModelDB.FK_Audits_BaselinePlan" FromRole="BaselinePlan" ToRole="Audits" />
+        </EntityType>
+        <EntityType Name="BaselinePlanAudit">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BaselinePlanId" Type="Int32" Nullable="false" />
+          <Property Name="Values" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="Verified" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="BaselinePlan" Relationship="ModelDB.FK_BaselinePlanAudit_BaselinePlan" FromRole="BaselinePlanAudit" ToRole="BaselinePlan" />
+        </EntityType>
+        <EntityType Name="GitSetup">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RepositoryPath" Type="String" Nullable="false" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="ProjectId" Type="Int32" Nullable="false" />
+          <Property Name="Crendential" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Project" Relationship="ModelDB.FK_GitSetup_Project" FromRole="GitSetup" ToRole="Project" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Project">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="Acronym" Type="String" Nullable="false" MaxLength="5" FixedLength="true" Unicode="true" />
+          <Property Name="TemplateEmail" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="EmailCM" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="BaselineFlowProject" Relationship="ModelDB.Fk_BaselineFlow_Project" FromRole="Project" ToRole="BaselineFlowProject" />
+          <NavigationProperty Name="BaselinePlan" Relationship="ModelDB.FK_BaselinePlan_Project" FromRole="Project" ToRole="BaselinePlan" />
+          <NavigationProperty Name="GitSetup" Relationship="ModelDB.FK_GitSetup_Project" FromRole="Project" ToRole="GitSetup" />
+          <NavigationProperty Name="ProjectUser" Relationship="ModelDB.FK_ProjectUser_Project" FromRole="Project" ToRole="ProjectUser" />
+          <NavigationProperty Name="TeamCitySetup" Relationship="ModelDB.FK_TeamCitySetup_Project" FromRole="Project" ToRole="TeamCitySetup" />
+          <NavigationProperty Name="Audits" Relationship="ModelDB.FK_Audits_Project" FromRole="Project" ToRole="Audits" />
+        </EntityType>
+        <EntityType Name="ProjectUser">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProjectId" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="50" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Project" Relationship="ModelDB.FK_ProjectUser_Project" FromRole="ProjectUser" ToRole="Project" />
+        </EntityType>
+        <EntityType Name="TeamCitySetup">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Uri" Type="String" Nullable="false" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="Crendential" Type="String" Nullable="false" MaxLength="500" FixedLength="true" Unicode="true" />
+          <Property Name="IdProject" Type="Int32" Nullable="false" />
+          <Property Name="BuildId" Type="String" Nullable="false" MaxLength="100" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Project" Relationship="ModelDB.FK_TeamCitySetup_Project" FromRole="TeamCitySetup" ToRole="Project" />
+        </EntityType>
+        <Association Name="FK_BaselineFlow_BaselineFlow">
+          <End Type="ModelDB.BaselineFlow" Role="BaselineFlow" Multiplicity="1" />
+          <End Type="ModelDB.BaselineFlowProject" Role="BaselineFlowProject" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BaselineFlow">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BaselineFlowProject">
+              <PropertyRef Name="BaselineFlowId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_BaselineFlow_Project">
+          <End Type="ModelDB.Project" Role="Project" Multiplicity="1" />
+          <End Type="ModelDB.BaselineFlowProject" Role="BaselineFlowProject" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BaselineFlowProject">
+              <PropertyRef Name="ProjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BaselinePlan_Project">
+          <End Type="ModelDB.Project" Role="Project" Multiplicity="1" />
+          <End Type="ModelDB.BaselinePlan" Role="BaselinePlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BaselinePlan">
+              <PropertyRef Name="ProjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BaselinePlanAudit_BaselinePlan">
+          <End Type="ModelDB.BaselinePlan" Role="BaselinePlan" Multiplicity="1" />
+          <End Type="ModelDB.BaselinePlanAudit" Role="BaselinePlanAudit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BaselinePlan">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BaselinePlanAudit">
+              <PropertyRef Name="BaselinePlanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GitSetup_Project">
+          <End Type="ModelDB.Project" Role="Project" Multiplicity="1" />
+          <End Type="ModelDB.GitSetup" Role="GitSetup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GitSetup">
+              <PropertyRef Name="ProjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProjectUser_Project">
+          <End Type="ModelDB.Project" Role="Project" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="ModelDB.ProjectUser" Role="ProjectUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProjectUser">
+              <PropertyRef Name="ProjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TeamCitySetup_Project">
+          <End Type="ModelDB.Project" Role="Project" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="ModelDB.TeamCitySetup" Role="TeamCitySetup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TeamCitySetup">
+              <PropertyRef Name="IdProject" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="AuditReport">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Verify" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="Conformities" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="AuditReportResults">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AuditId" Type="Int32" Nullable="false" />
+          <Property Name="AuditReportId" Type="Int32" Nullable="false" />
+          <Property Name="Result" Type="Int32" Nullable="true" />
+          <Property Name="Severity" Type="Int32" Nullable="true" />
+          <Property Name="IssuesJira" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Comments" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ProblemsFound" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Audits">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProjectId" Type="Int32" Nullable="false" />
+          <Property Name="ReportNumber" Type="Int32" Nullable="false" />
+          <Property Name="ScheduledDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="PerformedDate" Type="DateTime" Precision="0" />
+          <Property Name="Auditor" Type="String" Nullable="false" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="Comments" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="BaselineId" Type="Int32" />
+          <NavigationProperty Name="BaselinePlan" Relationship="ModelDB.FK_Audits_BaselinePlan" FromRole="Audits" ToRole="BaselinePlan" />
+          <NavigationProperty Name="Project" Relationship="ModelDB.FK_Audits_Project" FromRole="Audits" ToRole="Project" />
+        </EntityType>
+        <Association Name="FK_Audits_BaselinePlan">
+          <End Type="ModelDB.BaselinePlan" Role="BaselinePlan" Multiplicity="0..1" />
+          <End Type="ModelDB.Audits" Role="Audits" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BaselinePlan">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Audits">
+              <PropertyRef Name="BaselineId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Audits_Project">
+          <End Type="ModelDB.Project" Role="Project" Multiplicity="1" />
+          <End Type="ModelDB.Audits" Role="Audits" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Audits">
+              <PropertyRef Name="ProjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ModelDBStoreContainer" CdmEntityContainer="EntitiesDB">
+          <EntitySetMapping Name="BaselineAudit">
+            <EntityTypeMapping TypeName="ModelDB.BaselineAudit">
+              <MappingFragment StoreEntitySet="BaselineAudit">
+                <ScalarProperty Name="criteria" ColumnName="criteria" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BaselineFlow">
+            <EntityTypeMapping TypeName="ModelDB.BaselineFlow">
+              <MappingFragment StoreEntitySet="BaselineFlow">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BaselineFlowProject">
+            <EntityTypeMapping TypeName="ModelDB.BaselineFlowProject">
+              <MappingFragment StoreEntitySet="BaselineFlowProject">
+                <ScalarProperty Name="BaselineFlowId" ColumnName="BaselineFlowId" />
+                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BaselinePlan">
+            <EntityTypeMapping TypeName="ModelDB.BaselinePlan">
+              <MappingFragment StoreEntitySet="BaselinePlan">
+                <ScalarProperty Name="RememberMeDays" ColumnName="RememberMeDays" />
+                <ScalarProperty Name="RememberMe" ColumnName="RememberMe" />
+                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+                <ScalarProperty Name="IsReleased" ColumnName="IsReleased" />
+                <ScalarProperty Name="ReleaseDate" ColumnName="ReleaseDate" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BaselinePlanAudit">
+            <EntityTypeMapping TypeName="ModelDB.BaselinePlanAudit">
+              <MappingFragment StoreEntitySet="BaselinePlanAudit">
+                <ScalarProperty Name="Verified" ColumnName="Verified" />
+                <ScalarProperty Name="Values" ColumnName="Values" />
+                <ScalarProperty Name="BaselinePlanId" ColumnName="BaselinePlanId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GitSetup">
+            <EntityTypeMapping TypeName="ModelDB.GitSetup">
+              <MappingFragment StoreEntitySet="GitSetup">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Crendential" ColumnName="Crendential" />
+                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+                <ScalarProperty Name="RepositoryPath" ColumnName="RepositoryPath" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Project">
+            <EntityTypeMapping TypeName="ModelDB.Project">
+              <MappingFragment StoreEntitySet="Project">
+                <ScalarProperty Name="EmailCM" ColumnName="EmailCM" />
+                <ScalarProperty Name="TemplateEmail" ColumnName="TemplateEmail" />
+                <ScalarProperty Name="Acronym" ColumnName="Acronym" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProjectUser">
+            <EntityTypeMapping TypeName="ModelDB.ProjectUser">
+              <MappingFragment StoreEntitySet="ProjectUser">
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TeamCitySetup">
+            <EntityTypeMapping TypeName="ModelDB.TeamCitySetup">
+              <MappingFragment StoreEntitySet="TeamCitySetup">
+                <ScalarProperty Name="BuildId" ColumnName="BuildId" />
+                <ScalarProperty Name="IdProject" ColumnName="IdProject" />
+                <ScalarProperty Name="Crendential" ColumnName="Crendential" />
+                <ScalarProperty Name="Uri" ColumnName="Uri" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AuditReport">
+            <EntityTypeMapping TypeName="ModelDB.AuditReport">
+              <MappingFragment StoreEntitySet="AuditReport">
+                <ScalarProperty Name="Conformities" ColumnName="Conformities" />
+                <ScalarProperty Name="Verify" ColumnName="Verify" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AuditReportResults">
+            <EntityTypeMapping TypeName="ModelDB.AuditReportResults">
+              <MappingFragment StoreEntitySet="AuditReportResults">
+                <ScalarProperty Name="ProblemsFound" ColumnName="ProblemsFound" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="IssuesJira" ColumnName="IssuesJira" />
+                <ScalarProperty Name="Severity" ColumnName="Severity" />
+                <ScalarProperty Name="Result" ColumnName="Result" />
+                <ScalarProperty Name="AuditReportId" ColumnName="AuditReportId" />
+                <ScalarProperty Name="AuditId" ColumnName="AuditId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Audits">
+            <EntityTypeMapping TypeName="ModelDB.Audits">
+              <MappingFragment StoreEntitySet="Audits">
+                <ScalarProperty Name="BaselineId" ColumnName="BaselineId" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="Auditor" ColumnName="Auditor" />
+                <ScalarProperty Name="PerformedDate" ColumnName="PerformedDate" />
+                <ScalarProperty Name="ScheduledDate" ColumnName="ScheduledDate" />
+                <ScalarProperty Name="ReportNumber" ColumnName="ReportNumber" />
+                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,75 @@
+﻿@model KPax.DataModels.Audits
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Audits</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ReportNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ReportNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ScheduledDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ScheduledDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PerformedDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PerformedDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Auditor)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Auditor)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Comments)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Comments)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BaselinePlan.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BaselinePlan.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Project.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Project.Name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

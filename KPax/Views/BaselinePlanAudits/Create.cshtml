@@ -1,0 +1,58 @@
+﻿@using System.Runtime.InteropServices
+@using MvcCheckBoxList.Model
+@model KPax.Models.BaselinePlanAuditViewModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h2>Create</h2>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Baseline Audit</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.BaselinePlanId, "Baseline", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("BaselinePlanId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.BaselinePlanId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <style type="text/css">
+            label {
+                display: inline;
+                padding: 5px !important;
+                line-height: 2px;
+            }
+        </style>
+        @{
+             var htmlListInfo = new HtmlListInfo(HtmlTag.table, 1, null, TextLayout.Default, TemplateIsUsed.No);
+
+            <div class="form-group-checklist">
+                @Html.Label("Checklist", new {@class = "col-md-2 control-label"})
+                <div class="col-md-10">
+                    @Html.CheckBoxListFor(model => model.Values, model => model.BaselineAudits,
+             model => model.Id, model => model.criteria, model => model.SelectedBaselineAudits, htmlListInfo)
+                </div>
+            </div>
+        }
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

@@ -1,0 +1,51 @@
+﻿@using System.Runtime.InteropServices
+@using MvcCheckBoxList.Model
+@model KPax.Models.BaselineFlowListViewModel
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.Project.Id)
+    <div class="form-horizontal">
+        <h4>Baseline flow</h4>
+        <hr />
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success">
+                <p><strong>Success:</strong> @TempData["Success"].ToString()</p>
+            </div>
+        }
+        <div class="form-group">
+            @Html.LabelFor(m => m.Project, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Project.Name, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", @readonly = "readonly" } })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Flow items", new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.CheckBoxListFor(model => model.PostedBaselineFlows.BaselineFlowIds, model => model.AvailableBaselineFlow,
+                    model => model.Id, model => model.Name, model => model.SelectedBaselineFlow, Position.Vertical)
+            </div>
+        </div>
+
+       
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

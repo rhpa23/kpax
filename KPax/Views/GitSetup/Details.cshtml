@@ -1,0 +1,79 @@
+﻿@model KPax.Models.GitSetupViewModel
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Git setup</h4>
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-error">
+            <p><strong>Error:</strong> @TempData["ErrorMessage"].ToString()</p>
+        </div>
+    }
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success">
+            <p><strong>Success:</strong> @TempData["Success"].ToString()</p>
+        </div>
+    }
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.RepositoryPath)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RepositoryPath)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Project)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Project.Name)
+        </dd>
+        
+        <dt>
+            @Html.DisplayNameFor(model => model.UserName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.UserName)
+        </dd>
+        
+        <dt>Description </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        
+        <dt>Current branch</dt>
+        <dd>
+            @ViewBag.CurrentBranch
+        </dd>
+        
+        <dt>Last tag </dt>
+        <dd>
+            @ViewBag.LastTag
+        </dd>
+        
+        <dt>Last modify </dt>
+        <dd>
+            @ViewBag.LastModify
+        </dd>
+        <dt>Status </dt>
+        <dd>
+            @ViewBag.Status
+        </dd>
+
+        <dd>
+            <input type="button" value="Pull request" class="btn btn-default" onclick="location.href='@Url.Action("Pull", "GitSetup", new { id = Model.Id })'" />        
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
